@@ -27,20 +27,14 @@ app.get("/api/hello", function (req, res) {
 // UNIX
 app.get("/api/:time", function (req, res) {
   let date = new Date(req.params.time);
-  if (date.getTime() > 0) {
-    res.json({
-      "unix": date.valueOf() / 1000,
-      "utc": date.toString()
-    });
-  }
-  else {
-    let date = new Date(req.params.time * 1000);
-    res.json({
-      "unix": date.valueOf() / 1000,
-      "utc": date.toString()
-    });
+  if (!(date.getTime() > 0)) {
+    date = new Date(parseInt(req.params.time));
   }
 
+  res.json({
+    "unix": date.valueOf(),
+    "utc": date.toString()
+  });
 });
 
 
