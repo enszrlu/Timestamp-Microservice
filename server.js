@@ -25,15 +25,26 @@ app.get("/api/hello", function (req, res) {
 });
 
 // UNIX
-app.get("/api/:time", function (req, res) {
-  let date = new Date(req.params.time);
+app.get("/api/:time?", function (req, res) {
+  let date;
+  console.log(req.params.time)
+  if (req.params.time == undefined) {
+    date = new Date();
+  }
+  else {
+    date = new Date(req.params.time);
+    if (!(date.getTime() > 0)) {
+      date = new Date(parseInt(req.params.time));
+    }
+  }
+
   if (!(date.getTime() > 0)) {
-    date = new Date(parseInt(req.params.time));
+    res.json({ error: "Invalid Date" });
   }
 
   res.json({
     "unix": date.valueOf(),
-    "utc": date.toString()
+    "utc": date.toUTCString()
   });
 });
 
