@@ -29,14 +29,14 @@ app.get("/api/:time", function (req, res) {
   let date = new Date(req.params.time);
   if (date.getTime() > 0) {
     res.json({
-      "unix": date.valueOf(),
+      "unix": date.valueOf() / 1000,
       "utc": date.toString()
     });
   }
   else {
     let date = new Date(req.params.time * 1000);
     res.json({
-      "unix": date.valueOf(),
+      "unix": date.valueOf() / 1000,
       "utc": date.toString()
     });
   }
